@@ -16,6 +16,8 @@ public class Survive implements ModInitializer {
 	}
 	@Override
 	public void onInitialize() {
+		Thirst.init();
+		ThirstPayload.register();
 
 
 	}
