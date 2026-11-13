@@ -20,6 +20,9 @@
 		],
 		"fabric-datagen": [
 			"hema.survive.SurviveDataGenerator"
+		],
+		"client": [
+			"hema.survive.SurviveClient"
 		]
 	},
 	"mixins": [

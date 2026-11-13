@@ -18,6 +18,7 @@ public class Survive implements ModInitializer {
 	public void onInitialize() {
 		Thirst.init();
 		ThirstPayload.register();
+		SurvivalTick.register();
 
 
 	}
