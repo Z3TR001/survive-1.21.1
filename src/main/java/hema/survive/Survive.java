@@ -19,6 +19,8 @@ public class Survive implements ModInitializer {
 		Thirst.init();
 		ThirstPayload.register();
 		SurvivalTick.register();
+		Command.register();
+		SurviveItems.init();
 
 
 	}

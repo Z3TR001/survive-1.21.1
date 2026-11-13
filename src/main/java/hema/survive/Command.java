@@ -14,7 +14,7 @@ public final class Command {
 
     public static void register() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
-                dispatcher.register(CommandManager.literal("ailments")
+                dispatcher.register(CommandManager.literal("survive")
                         .requires(src -> src.hasPermissionLevel(2))
                         .then(CommandManager.literal("status").executes(Command::status))
                         .then(CommandManager.literal("thirst")

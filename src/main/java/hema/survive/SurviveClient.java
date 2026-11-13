@@ -9,11 +9,13 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
+import net.minecraft.text.Text;
+
 
 @Environment(EnvType.CLIENT)
 public class SurviveClient implements ClientModInitializer {
     private static int thirst = -1;
-    private static int draIn = 0;
+    private static int drain = 0;
 
     private static final int FULL = 0xFF3FA9F5;
     private static final int EMPTY = 0xFF1B2A38;
@@ -23,7 +25,7 @@ public class SurviveClient implements ClientModInitializer {
 
         ClientPlayNetworking.registerGlobalReceiver(ThirstPayload.ID, ((payload, context) -> {
             thirst = payload.thirst();
-            draIn = payload.drain();
+            drain = payload.drain();
         }));
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> thirst = -1);
         HudRenderCallback.EVENT.register(SurviveClient::render);
@@ -50,6 +52,10 @@ public class SurviveClient implements ClientModInitializer {
                 drop(ctx, x, y, FULL, false);
             else if (i == full && half)
                 drop(ctx, x, y, FULL, true);
+        }
+        if (drain >= 5) {
+            Text hot = Text.translatable("hud.survive.hot");
+            ctx.drawText(mc.textRenderer, hot, right - 84 - mc.textRenderer.getWidth(hot), y, 0xFF5555, true);
         }
     }
 
