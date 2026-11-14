@@ -11,8 +11,7 @@ public final class ConsumeHooks {
     private ConsumeHooks() {}
 
     public static void onConsume(ServerPlayerEntity p, ItemStack stack) {
-        if (p.isCreative() || p.isSpectator())
-            return;
+        if (p.isCreative() || p.isSpectator()) return;
 
         if (stack.isOf(SurviveItems.BOILED_WATER)) {
             Thirst.add(p, 800);
@@ -20,7 +19,6 @@ public final class ConsumeHooks {
             PotionContentsComponent contents = stack.get(DataComponentTypes.POTION_CONTENTS);
             if (contents != null && contents.matches(Potions.WATER)) {
                 Thirst.add(p, 400);
-
             } else {
                 Thirst.add(p, 200);
             }

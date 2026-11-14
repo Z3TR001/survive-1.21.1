@@ -1,5 +1,6 @@
 package hema.survive;
 
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -16,6 +17,8 @@ public class SurvivalTick {
     public static void register() {
         ServerPlayConnectionEvents.JOIN.register(((handler, sender, server) ->
                 Thirst.sync(handler.getPlayer(), Heat.drainPerSecond(handler.getPlayer()))));
+        ServerPlayerEvents.AFTER_RESPAWN.register(((oldPlayer, newPlayer, alive) ->
+                Thirst.sync(newPlayer, Heat.drainPerSecond(newPlayer))));
         ServerTickEvents.END_SERVER_TICK.register(SurvivalTick::tick);
     }
 
@@ -23,6 +26,9 @@ public class SurvivalTick {
 
         int now = server.getTicks();
         for (ServerPlayerEntity p : server.getPlayerManager().getPlayerList()) {
+            if ((now + p.getId()) % 5 == 0) {
+                Thirst.sync(p, Heat.drainPerSecond(p));
+            }
             if (p.isCreative() || p.isSpectator() || !p.isAlive())
                 continue;
 

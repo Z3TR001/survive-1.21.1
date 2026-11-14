@@ -24,7 +24,7 @@ public class BoiledWaterItem extends Item {
     }
 
     @Override
-    public int getMaxUseTime(ItemStack stacks, LivingEntity user) {
+    public int getMaxUseTime(ItemStack stack, LivingEntity user) {
         return 32;
     }
 

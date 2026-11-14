@@ -5,7 +5,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
@@ -22,26 +21,26 @@ public class SurviveClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-
-        ClientPlayNetworking.registerGlobalReceiver(ThirstPayload.ID, ((payload, context) -> {
+        ClientPlayNetworking.registerGlobalReceiver(ThirstPayload.ID, (payload, context) -> {
             thirst = payload.thirst();
             drain = payload.drain();
-        }));
+        });
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> thirst = -1);
-        HudRenderCallback.EVENT.register(SurviveClient::render);
-
     }
 
-    private static void render(DrawContext ctx, RenderTickCounter tickCounter) {
+    public static void render(DrawContext ctx ){
         MinecraftClient mc = MinecraftClient.getInstance();
         if (thirst < 0 || mc.player == null || mc.interactionManager == null
-        || mc.options.hudHidden || !mc.interactionManager.hasStatusBars())
+                || mc.options.hudHidden || !mc.interactionManager.hasStatusBars())
             return;
 
         int w = ctx.getScaledWindowWidth();
         int h = ctx.getScaledWindowHeight();
         int right = w / 2 + 91;
         int y = h - 49 - (mc.player.getAir() < mc.player.getMaxAir() ? 10 : 0);
+
+        ctx.getMatrices().push();
+        ctx.getMatrices().translate(0f, 0f, 1000f);
 
         int full = thirst / 200;
         boolean half = thirst % 200 >= 100;
@@ -55,12 +54,14 @@ public class SurviveClient implements ClientModInitializer {
         }
         if (drain >= 5) {
             Text hot = Text.translatable("hud.survive.hot");
-            ctx.drawText(mc.textRenderer, hot, right - 84 - mc.textRenderer.getWidth(hot), y, 0xFF5555, true);
+            ctx.drawText(mc.textRenderer, hot, right - 84 - mc.textRenderer.getWidth(hot), y, 0xFFFF5555, true);
         }
+
+        ctx.getMatrices().pop();
     }
 
-    private static void drop(DrawContext c, int x, int y, int color, boolean leftHalfOnly) {
-        c.fill(x + 3, y, leftHalfOnly ? x + 4 : x + 5, y  + 3, color);
-        c.fill(x + 1, y + 3, leftHalfOnly ? x + 4 : x + 7, y + 9, color);
+    private static void drop(DrawContext c, int x, int y, int color, boolean rightHalfOnly) {
+        c.fill(rightHalfOnly ? x + 4 : x + 3, y, x + 5, y + 3, color);
+        c.fill(rightHalfOnly ? x + 4 : x + 1, y + 3, x + 7, y + 9, color);
     }
 }
