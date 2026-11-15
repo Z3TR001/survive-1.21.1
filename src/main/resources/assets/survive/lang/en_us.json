@@ -1,4 +1,9 @@
 {
   "hud.survive.hot": "HOT",
-  "item.survive.boiled_water": "Boiled Water Bottle"
+  "item.survive.boiled_water": "Boiled Water Bottle",
+  "item.survive.antiparasitic": "Antiparasitic Tonic",
+  "effect.survive.parasites": "Parasites",
+  "message.survive.parasites": "Your stomach churns... parasites.",
+  "message.survive.bad_food": "That didn't sit right. Parasites!",
+  "message.survive.nothing_to_treat": "Nothing to treat."
 }

@@ -1,1 +1,6 @@
-{"parent": "minecraft:item/generated", "textures": {"layer0": "survive:item/boiled_water"}}
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "survive:item/boiled_water"
+  }
+}
