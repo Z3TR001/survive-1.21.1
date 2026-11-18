@@ -25,6 +25,9 @@ public final class ModEffects {
     public static final RegistryEntry<StatusEffect> PARASITES = reg("parasites", new Parasites());
     public static final RegistryEntry<StatusEffect> BROKEN_LEG = reg("broken_leg", new BrokenLeg());
 
+    public static final RegistryEntry<StatusEffect> BROKEN_MAIN_HAND = reg("broken_main_hand", new Plain(StatusEffectCategory.HARMFUL, 0x9C7A55));
+    public static final RegistryEntry<StatusEffect> BROKEN_OFF_HAND = reg("broken_off_hand", new Plain(StatusEffectCategory.HARMFUL, 0x9C7A55));
+
     public static boolean isAilment(RegistryEntry<StatusEffect> effect) {
         return AILMENTS.contains(effect);
     }
@@ -70,6 +73,12 @@ public final class ModEffects {
                     EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
             addAttributeModifier(EntityAttributes.GENERIC_JUMP_STRENGTH, Survive.id("effect.broken_leg_jump"),
                     -0.75, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        }
+    }
+
+    static class Plain extends StatusEffect {
+        Plain(StatusEffectCategory category, int color) {
+            super(category, color);
         }
     }
 }

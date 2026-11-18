@@ -29,9 +29,19 @@ public final class Command {
                                                     return 1;
                                                 }))))
                         .then(CommandManager.literal("break")
-                                .then(CommandManager.literal("leg").executes(ctx ->{
+                                .then(CommandManager.literal("leg").executes(ctx -> {
                                     boolean ok = InjuryEvents.breakLeg(ctx.getSource().getPlayerOrThrow());
                                     ctx.getSource().sendFeedback(() -> Text.literal(ok ? "Leg broken" : "Already broken"), false);
+                                    return 1;
+                                }))
+                                .then(CommandManager.literal("mainhand").executes(ctx -> {
+                                    boolean ok = InjuryEvents.breakHand(ctx.getSource().getPlayerOrThrow(), true);
+                                    ctx.getSource().sendFeedback(() -> Text.literal(ok ? "Main hand broken" : "Already Broken"), false);
+                                    return 1;
+                                }))
+                                .then(CommandManager.literal("offhand").executes(ctx -> {
+                                    boolean ok = InjuryEvents.breakHand(ctx.getSource().getPlayerOrThrow(), false);
+                                    ctx.getSource().sendFeedback(() -> Text.literal(ok ? "Off hand broken" : "Already broken"), false);
                                     return 1;
                                 })))
                 ));
