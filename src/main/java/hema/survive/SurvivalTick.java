@@ -8,9 +8,18 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SurvivalTick {
     private SurvivalTick() {
 
+    }
+
+    private static final List<Runnable> NEXT_TICK = new ArrayList<>();
+
+    public static void runNextTick(Runnable task) {
+        NEXT_TICK.add(task);
     }
 
 
@@ -23,6 +32,11 @@ public class SurvivalTick {
     }
 
     private static void tick(MinecraftServer server) {
+        if (!NEXT_TICK.isEmpty()) {
+            List<Runnable> tasks = new ArrayList<>(NEXT_TICK);
+            NEXT_TICK.clear();
+            tasks.forEach(Runnable::run);
+        }
 
         int now = server.getTicks();
         for (ServerPlayerEntity p : server.getPlayerManager().getPlayerList()) {

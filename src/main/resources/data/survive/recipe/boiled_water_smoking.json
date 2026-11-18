@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smoking",
+  "category": "misc",
+  "ingredient": {
+    "item": "minecraft:potion"
+  },
+  "result": {
+    "id": "survive:boiled_water"
+  },
+  "experience": 0.0,
+  "cookingtime": 100
+}

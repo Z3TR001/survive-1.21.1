@@ -1,0 +1,10 @@
+{
+  "bone_crack": {
+    "subtitle": "subtitles.survive.bone_crack",
+    "sounds": ["survive:bone_crack"]
+  },
+  "stomach": {
+    "subtitle": "subtitles.survive.stomach",
+    "sounds": ["survive:stomach"]
+  }
+}

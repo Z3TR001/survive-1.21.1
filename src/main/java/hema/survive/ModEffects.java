@@ -1,6 +1,8 @@
 package hema.survive;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -21,6 +23,7 @@ public final class ModEffects {
     private static final Set<RegistryEntry<StatusEffect>> AILMENTS = new HashSet<>();
 
     public static final RegistryEntry<StatusEffect> PARASITES = reg("parasites", new Parasites());
+    public static final RegistryEntry<StatusEffect> BROKEN_LEG = reg("broken_leg", new BrokenLeg());
 
     public static boolean isAilment(RegistryEntry<StatusEffect> effect) {
         return AILMENTS.contains(effect);
@@ -60,4 +63,13 @@ public final class ModEffects {
         }
     }
 
+    static class BrokenLeg extends StatusEffect {
+        BrokenLeg() {
+            super(StatusEffectCategory.HARMFUL, 0xB6B4A);
+            addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, Survive.id("effect.broken_leg_speed"), -0.5,
+                    EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+            addAttributeModifier(EntityAttributes.GENERIC_JUMP_STRENGTH, Survive.id("effect.broken_leg_jump"),
+                    -0.75, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        }
+    }
 }

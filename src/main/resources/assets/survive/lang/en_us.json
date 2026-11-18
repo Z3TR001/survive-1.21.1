@@ -5,5 +5,11 @@
   "effect.survive.parasites": "Parasites",
   "message.survive.parasites": "Your stomach churns... parasites.",
   "message.survive.bad_food": "That didn't sit right. Parasites!",
-  "message.survive.nothing_to_treat": "Nothing to treat."
+  "message.survive.nothing_to_treat": "Nothing to treat.",
+  "effect.survive.broken_leg": "Broken Leg",
+  "message.survive.broken_leg": "Your leg snaps!",
+  "key.survive.body_hud": "Body HUD: always / injured only / off",
+  "key.categories.survive": "Survive",
+  "subtitles.survive.bone_crack": "Bone cracks",
+  "subtitles.survive.stomach": "Stomach rumbles"
 }

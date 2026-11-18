@@ -22,6 +22,8 @@ public class Survive implements ModInitializer {
 		Command.register();
 		SurviveItems.init();
 		ModEffects.init();
+		InjuryEvents.register();
+		ModSounds.init();
 
 
 	}

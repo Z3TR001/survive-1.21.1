@@ -9,6 +9,9 @@ import net.minecraft.potion.Potions;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class ConsumeHooks {
     private ConsumeHooks() {}
 
@@ -21,7 +24,7 @@ public final class ConsumeHooks {
             PotionContentsComponent contents = stack.get(DataComponentTypes.POTION_CONTENTS);
             if (contents != null && contents.matches(Potions.WATER)) {
                 Thirst.add(p, 400);
-                infect(p, "message.survive.parasites");   // always
+                infect(p, "message.survive.parasites");
             } else {
                 Thirst.add(p, 200);
             }
@@ -32,7 +35,7 @@ public final class ConsumeHooks {
         }
 
         if (stack.isIn(ModTags.RISKY_FOODS)) {
-            infect(p, "message.survive.bad_food");        // always
+            infect(p, "message.survive.bad_food");
         }
     }
 
@@ -41,5 +44,15 @@ public final class ConsumeHooks {
             return;
         p.addStatusEffect(new StatusEffectInstance(ModEffects.PARASITES, Tuning.PARASITE_TICKS, 0, false, false, true));
         p.sendMessage(Text.translatable(messageKey), true);
+        ModSounds.play(p, ModSounds.STOMACH, 0.9f, 1.0f);
+    }
+
+    private static void protectAilmentsFromMilk(ServerPlayerEntity p) {
+        List<StatusEffectInstance> keep = new ArrayList<>();
+        for (StatusEffectInstance inst : p.getStatusEffects()) {
+            if (ModEffects.isAilment(inst.getEffectType()))
+                keep.add(new StatusEffectInstance(inst));
+        }
+        SurvivalTick.runNextTick(() -> keep.forEach(p::addStatusEffect));
     }
 }

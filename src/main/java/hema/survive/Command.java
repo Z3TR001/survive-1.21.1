@@ -28,6 +28,12 @@ public final class Command {
                                                     ctx.getSource().sendFeedback(() -> Text.literal("Thirst set to " + now), false);
                                                     return 1;
                                                 }))))
+                        .then(CommandManager.literal("break")
+                                .then(CommandManager.literal("leg").executes(ctx ->{
+                                    boolean ok = InjuryEvents.breakLeg(ctx.getSource().getPlayerOrThrow());
+                                    ctx.getSource().sendFeedback(() -> Text.literal(ok ? "Leg broken" : "Already broken"), false);
+                                    return 1;
+                                })))
                 ));
     }
 
