@@ -11,5 +11,10 @@
   "key.survive.body_hud": "Body HUD: always / injured only / off",
   "key.categories.survive": "Survive",
   "subtitles.survive.bone_crack": "Bone cracks",
-  "subtitles.survive.stomach": "Stomach rumbles"
+  "subtitles.survive.stomach": "Stomach rumbles",
+  "effect.survive.broken_main_hand": "Broken Main Hand",
+  "effect.survive.broken_off_hand": "Broken Off Hand",
+  "message.survive.broken_main_hand": "Your main hand is broken!",
+  "message.survive.broken_off_hand": "Your off hand is broken!",
+  "message.survive.hand_broken": "Your hands are too hurt for that."
 }
