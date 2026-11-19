@@ -44,7 +44,7 @@ public class InjuryEvents {
         boolean  crush = source.isOf(DamageTypes.FALLING_ANVIL) || source.isOf(DamageTypes.FALLING_BLOCK) ||
                 source.isOf(DamageTypes.STALAGMITE);
 
-        if ((byMob || projectile || blast || crush) && taken >= Tuning.HAND_MIN_HIT_DAMAGE && r.nextFloat() < Math.min(0.8f, 0.2f + taken * 0.05f) {
+        if ((byMob || projectile || blast || crush) && taken >= Tuning.HAND_MIN_HIT_DAMAGE && r.nextFloat() < Math.min(0.8f, 0.2f + taken * 0.05f)) {
             breakRandomHand(p, r);
         }
     }

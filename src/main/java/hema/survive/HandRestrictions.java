@@ -19,7 +19,7 @@ public final class HandRestrictions {
         return p.hasStatusEffect(hand == Hand.MAIN_HAND ? ModEffects.BROKEN_MAIN_HAND : ModEffects.BROKEN_OFF_HAND);
     }
 
-    private static boolean isBroken(PlayerEntity p) {
+    private static boolean bothBroken(PlayerEntity p) {
         return isBroken(p, Hand.MAIN_HAND) && isBroken(p, Hand.OFF_HAND);
     }
 
@@ -38,7 +38,7 @@ public final class HandRestrictions {
         });
 
         UseEntityCallback.EVENT.register((p, w, hand, entityh, hit) -> {
-            if (bothbroken(p)) {
+            if (bothBroken(p)) {
                 warn(p, w);
                 return ActionResult.FAIL;
             }

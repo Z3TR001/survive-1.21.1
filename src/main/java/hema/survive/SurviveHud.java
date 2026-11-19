@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.util.Arm;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
@@ -79,6 +80,20 @@ public final class SurviveHud {
         if (p.hasStatusEffect(ModEffects.BROKEN_LEG)) {
             legRight = HURT;
             legLeft = HURT;
+        }
+
+        boolean rightIsMixin = p.getMainArm() == Arm.RIGHT;
+        if (p.hasStatusEffect(ModEffects.BROKEN_MAIN_HAND)) {
+            if (rightIsMixin)
+                armRight = HURT;
+            else
+                armLeft = HURT;
+        }
+        if (p.hasStatusEffect(ModEffects.BROKEN_OFF_HAND)) {
+            if (rightIsMixin)
+                armLeft = HURT;
+            else
+                armRight = HURT;
         }
 
         boolean injured = head + torso + armRight + armLeft + legRight + legLeft > 0;
