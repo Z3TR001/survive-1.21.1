@@ -24,7 +24,7 @@ public class Survive implements ModInitializer {
 		ModEffects.init();
 		InjuryEvents.register();
 		ModSounds.init();
-
+		SlotLock.register();
 
 	}
 
