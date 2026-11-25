@@ -1,4 +1,3 @@
-// NEW FILE (stage 7b): create this whole file
 package hema.survive.mixin;
 
 import hema.survive.SlotLock;
