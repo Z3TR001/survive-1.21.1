@@ -18,6 +18,15 @@ public class SurviveItems {
             p -> p.hasStatusEffect(ModEffects.PARASITES),
             p -> p.removeStatusEffect(ModEffects.PARASITES)));
 
+    public static final Item SPLINT = register("splint", new MedicalItem(new Item.Settings().maxCount(16),
+            60, UseAction.NONE, ModSounds.BANDAGE,
+            p -> p.hasStatusEffect(ModEffects.BROKEN_LEG) || p.hasStatusEffect(ModEffects.BROKEN_MAIN_HAND)
+                    || p.hasStatusEffect(ModEffects.BROKEN_OFF_HAND),
+            p -> {
+                if (p.hasStatusEffect(ModEffects.BROKEN_LEG)) p.removeStatusEffect(ModEffects.BROKEN_LEG);
+                else if (p.hasStatusEffect(ModEffects.BROKEN_MAIN_HAND)) p.removeStatusEffect(ModEffects.BROKEN_MAIN_HAND);
+                else p.removeStatusEffect(ModEffects.BROKEN_OFF_HAND);
+            }));
 
 
             private static Item register(String name, Item item){

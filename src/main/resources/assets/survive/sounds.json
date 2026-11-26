@@ -6,5 +6,9 @@
   "stomach": {
     "subtitle": "subtitles.survive.stomach",
     "sounds": ["survive:stomach"]
+  },
+  "bandage": {
+    "subtitle": "subtitles.survive.bandage",
+    "sounds": ["survive:bandage"]
   }
 }

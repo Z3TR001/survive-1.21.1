@@ -11,6 +11,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
+import net.minecraft.sound.SoundEvent;
 
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -19,14 +20,21 @@ public class MedicalItem extends Item {
 
     private final int useTicks;
     private final UseAction action;
+    private final SoundEvent finishSound;   // may be null
     private final Predicate<PlayerEntity> canTreat;
     private final Consumer<ServerPlayerEntity> treat;
 
     public MedicalItem(Settings settings, int useTicks, UseAction action,
                        Predicate<PlayerEntity> canTreat, Consumer<ServerPlayerEntity> treat) {
+        this(settings, useTicks, action, null, canTreat, treat);
+    }
+
+    public MedicalItem(Settings settings, int useTicks, UseAction action, SoundEvent finishSound,
+                       Predicate<PlayerEntity> canTreat, Consumer<ServerPlayerEntity> treat) {
         super(settings);
         this.useTicks = useTicks;
         this.action = action;
+        this.finishSound = finishSound;
         this.canTreat = canTreat;
         this.treat = treat;
     }
@@ -55,6 +63,7 @@ public class MedicalItem extends Item {
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         if (!world.isClient && user instanceof ServerPlayerEntity player && canTreat.test(player)) {
             treat.accept(player);
+            if (finishSound != null) ModSounds.play(player, finishSound, 1.0f, 1.0f);
             stack.decrementUnlessCreative(1, player);
         }
         return stack;

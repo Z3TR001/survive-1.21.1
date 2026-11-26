@@ -15,6 +15,7 @@ public final class ModSounds {
 
     public static final SoundEvent BONE_CRACK = reg("bone_crack");
     public static final SoundEvent STOMACH = reg("stomach");
+    public static final SoundEvent BANDAGE = reg("bandage");
 
 
     private static SoundEvent reg(String name) {

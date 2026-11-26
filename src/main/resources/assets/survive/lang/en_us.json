@@ -16,5 +16,7 @@
   "effect.survive.broken_off_hand": "Broken Off Hand",
   "message.survive.broken_main_hand": "Your main hand is broken!",
   "message.survive.broken_off_hand": "Your off hand is broken!",
-  "message.survive.hand_broken": "Your hands are too hurt for that."
+  "message.survive.hand_broken": "Your hands are too hurt for that.",
+  "item.survive.splint": "Splint",
+  "subtitles.survive.bandage": "Bandage rustles"
 }

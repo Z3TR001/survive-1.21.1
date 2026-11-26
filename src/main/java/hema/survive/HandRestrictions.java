@@ -1,5 +1,6 @@
 package hema.survive;
 
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -23,6 +24,10 @@ public final class HandRestrictions {
         return isBroken(p, Hand.MAIN_HAND) && isBroken(p, Hand.OFF_HAND);
     }
 
+    private static boolean exempt(PlayerEntity p) {
+        return p.isCreative() || p.isSpectator();
+    }
+
     private static void warn(PlayerEntity p, World w) {
         if (!w.isClient)
             p.sendMessage(Text.translatable("message.survive.hand_broken"), true);
@@ -31,22 +36,31 @@ public final class HandRestrictions {
     public static void register() {
 
         UseBlockCallback.EVENT.register((p, w, hand, hit) -> {
-            if (bothBroken(p)) { warn(p, w);
-                return ActionResult.FAIL;
-            }
-            return ActionResult.PASS;
-        });
-
-        UseEntityCallback.EVENT.register((p, w, hand, entityh, hit) -> {
-            if (bothBroken(p)) {
+            if (!exempt(p) && bothBroken(p)) {
                 warn(p, w);
                 return ActionResult.FAIL;
             }
             return ActionResult.PASS;
         });
 
-        AttackEntityCallback.EVENT.register((p, w, hand, pos, dir) -> {
-            if (isBroken(p, Hand.MAIN_HAND)) {
+        UseEntityCallback.EVENT.register((p, w, hand, entity, hit) -> {
+            if (!exempt(p) && bothBroken(p)) {
+                warn(p, w);
+                return ActionResult.FAIL;
+            }
+            return ActionResult.PASS;
+        });
+
+        AttackEntityCallback.EVENT.register((p, w, hand, entity, hit) -> {
+            if (!exempt(p) && isBroken(p, Hand.MAIN_HAND)) {
+                warn(p, w);
+                return ActionResult.FAIL;
+            }
+            return ActionResult.PASS;
+        });
+
+        AttackBlockCallback.EVENT.register((p, w, hand, pos, dir) -> {
+            if (!exempt(p) && isBroken(p, Hand.MAIN_HAND)) {
                 warn(p, w);
                 return ActionResult.FAIL;
             }
@@ -54,6 +68,6 @@ public final class HandRestrictions {
         });
 
         PlayerBlockBreakEvents.BEFORE.register((w, p, pos, state, be) ->
-                !isBroken(p, Hand.MAIN_HAND));
+                exempt(p) || !isBroken(p, Hand.MAIN_HAND));
     }
 }
